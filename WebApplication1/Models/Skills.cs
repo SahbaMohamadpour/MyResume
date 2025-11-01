@@ -6,6 +6,7 @@ namespace WebApplication1.Models
     {
         public class Skill
         {
+            [Key]
             public int Id { get; set; }
 
             [Required]
