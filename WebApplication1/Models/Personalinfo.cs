@@ -29,6 +29,11 @@ namespace WebApplication1.Models
         [Display(Name = "Language")]
         public string Language { get; set; }
 
+        [Display(Name = "Why am a here?")]
+        public string Manifesto { get; set; }
+
+        [Display(Name = "What are u focuced on right now?")]
+        public string Focuced { get; set; }
 
 
 

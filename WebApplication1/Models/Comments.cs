@@ -17,7 +17,7 @@ namespace WebApplication1.Models
         public string Description { get; set; }
 
         [Required]
-        [Display(Name = "Comment")]
+        [Display(Name = "What people say about me?")]
         public string Comment { get; set; }
     }
 }
