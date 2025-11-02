@@ -24,8 +24,6 @@ namespace WebApplication1.Models
             [StringLength(50)]
             public string IconClass { get; set; } 
 
-            
-
             [Display(Name = "Is Active")]
             public bool IsActive { get; set; } = true;
 
