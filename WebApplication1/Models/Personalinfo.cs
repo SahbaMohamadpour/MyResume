@@ -2,38 +2,44 @@
 
 namespace WebApplication1.Models
 {
-    public class Personalinfo
+    public class Personalinfo : BaseData
     {
-        [Key]
-        public int Id { get; set; }
+      
 
         [Required]
         [Display(Name = "Name")]
         public string Name { get; set; }
 
-        [Display(Name = "JobTitle")]
-        public string JobTitle { get; set; }
+        [Required]
+        [Display(Name = "image")]
+        public string? Image { get; set; }
 
-        [Display(Name = "JobDescription")]
-        public string JobDescription { get; set; } = string.Empty;
+        [Display(Name = "position")]
+        public string Position { get; set; }
 
-        [Display(Name = "Education")]
-        public int Education { get; set; }
+        [Display(Name = "About")]
+        public string About { get; set; } 
 
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Display(Name = "PhoneNumber")]
-        public int PhoneNumber { get; set; }
-
-        [Display(Name = "Language")]
-        public string Language { get; set; }
-
         [Display(Name = "Why am a here?")]
         public string Manifesto { get; set; }
 
-        [Display(Name = "What are u focuced on right now?")]
-        public string Focuced { get; set; }
+
+        [Display(Name = "Country")]
+
+        public string Country { get; set; }
+
+        [Display(Name = "Website")]
+        public string Website { get; set; }
+
+        [Display(Name = "LinkedIn")]
+        public string LinkedIn { get; set; }
+
+
+        [Display(Name = "GitHub ")]
+        public string GitHub { get; set; }
 
 
 
