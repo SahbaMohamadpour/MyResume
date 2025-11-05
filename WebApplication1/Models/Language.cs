@@ -5,13 +5,18 @@ namespace WebApplication1.Models
 {
     public class Language:BaseData
     {
-        [Display(Name = "languageName")]
+        [Required(ErrorMessage = "Language name is required")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Language name must be between 2 and 50 characters")]
+        [Display(Name = "Language Name")]
+      
         public string languageName { get; set; }
 
-        [Display(Name = "LangLevel")]
+        [Required(ErrorMessage = "Language level is required")]
+        [Display(Name = "Language Level")]
+        [EnumDataType(typeof(LanguageLevel), ErrorMessage = "Please select a valid language level")]
         public LanguageLevel LangLevel { get; set; }
 
-        
+
 
     }
 }

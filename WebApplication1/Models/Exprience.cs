@@ -5,16 +5,21 @@ namespace WebApplication1.Models
 {
     public class Exprience : BaseData
     {
-        [Display(Name = "JobTitle")]
+        [Required(ErrorMessage = "Job Title is required")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "Job Title must be between 2 and 100 characters")]
+        [Display(Name = "Job Title")]
         public string JobTitle { get; set; }
 
-        [Display(Name = "CompanyName")]
+        [Required(ErrorMessage = "Company Name is required")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "Company Name must be between 2 and 100 characters")]
+        [Display(Name = "Company Name")]
         public string CompanyName { get; set; }
 
-        [Display(Name = "IsRemote")]
+        [Display(Name = "Remote Position")]
         public bool IsRemote { get; set; }
 
-        [Display(Name = "EmploymentType")]
+        [Required(ErrorMessage = "Employment Type is required")]
+        [Display(Name = "Employment Type")]
         public EmploymentType EmploymentType { get; set; }
     }
 }
