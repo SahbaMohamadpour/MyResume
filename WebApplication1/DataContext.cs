@@ -31,8 +31,11 @@ namespace WebApplication1
         public DbSet<Exprience> Expriences { get; set; }
         public DbSet<Hobbies> Hobby { get; set; }
         public DbSet<Language> Languages { get; set; }
-        public DbSet<Personalinfo> Personalinfo { get; set; }
+        public DbSet<Personalinfo> Skills { get; set; }
+
+        public DbSet<skills> Projects { get; set; }
         public DbSet<Skill> Skill { get; set; }
+
 
 
     }
