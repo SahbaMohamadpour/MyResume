@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebApplication1.Models;
+﻿using App.Domain.Models;
+using App.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Services.personalInfoServiceFolder
+namespace App.DataAccess.Services.personalInfoServiceFolder
 {
     public class PersonalInfoService : IPersonalInfoService
     {
@@ -12,17 +13,17 @@ namespace WebApplication1.Services.personalInfoServiceFolder
         }
         public async Task Add(Personalinfo model)
         {
-            await _context.Skills.AddAsync(model);
+            await _context.Personalinfos.AddAsync(model);
             await _context.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
         {
 
-            var Personalinfo = await _context.Skills.FindAsync(id);
+            var Personalinfo = await _context.Personalinfos.FindAsync(id);
             if (Personalinfo != null)
             {
-                _context.Skills.Remove(Personalinfo);
+                _context.Personalinfos.Remove(Personalinfo);
 
             }
             await _context.SaveChangesAsync();
@@ -30,14 +31,14 @@ namespace WebApplication1.Services.personalInfoServiceFolder
 
         public async Task<List<Personalinfo>> GetAll()
         {
-            return await _context.Skills
+            return await _context.Personalinfos
                 .OrderByDescending(s => s.UpdateAt).ToListAsync();
 
         }
 
         public async Task<Personalinfo> GetById(int id)
         {
-            var data = await _context.Skills
+            var data = await _context.Personalinfos
                 .FirstOrDefaultAsync(s => s.Id == id);
             if (data is null)
             {
@@ -49,12 +50,12 @@ namespace WebApplication1.Services.personalInfoServiceFolder
 
         public async Task Update(int id, Personalinfo model)
         {
-            var data = await _context.Skills
+            var data = await _context.Personalinfos
                 .FirstOrDefaultAsync(s => s.Id == id);
 
             if (data != null)
             {
-                _context.Skills.Update(data);
+                _context.Personalinfos.Update(data);
 
             }
             await _context.SaveChangesAsync();

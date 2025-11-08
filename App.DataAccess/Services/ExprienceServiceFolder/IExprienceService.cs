@@ -1,6 +1,6 @@
-﻿using WebApplication1.Models;
+﻿using App.Domain.Models;
 
-namespace WebApplication1.Services.ExprienceServiceFolder
+namespace App.DataAccess.Services.ExprienceServiceFolder
 {
     public interface IExprienceService
     {

@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
-using WebApplication1.Models;
+﻿using App.Domain.Models;
+using System.Diagnostics;
 
-namespace WebApplication1.Services.CertificateServiceFolder
+namespace App.DataAccess.Services.CertificateServiceFolder
 {
     public interface ICertificateService
     {

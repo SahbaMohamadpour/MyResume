@@ -1,13 +1,13 @@
-﻿using WebApplication1.Models;
+﻿using App.Domain.Models;
 
-namespace WebApplication1.Services.SkillServiceFolder
+namespace App.DataAccess.Services.SkillServiceFolder
 {
     public interface ISkillService
     {
-        Task<List<Skills>> GetAll();
-        Task<Skills> GetById(int id);
-        Task Add(skills model);
-        Task Update(int id, skills model);
+        Task<List<Skill>> GetAll();
+        Task<Skill> GetById(int id);
+        Task Add(Skill model);
+        Task Update(int id, Skill model);
         Task Delete(int id);
     }
 }

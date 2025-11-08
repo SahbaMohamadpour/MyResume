@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebApplication1.Models
+namespace App.Domain.Models
 {
-    public class skills
+    public class Project : BaseData
     {
-        [Key]
-        public int ProjectId { get; set; }
+        
+     
 
         [Required(ErrorMessage = "Project name is required")]
         [StringLength(100, ErrorMessage = "Project name cannot exceed 100 characters")]

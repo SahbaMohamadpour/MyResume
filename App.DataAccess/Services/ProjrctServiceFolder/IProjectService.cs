@@ -1,13 +1,13 @@
-﻿using WebApplication1.Models;
+﻿using App.Domain.Models;
 
-namespace WebApplication1.Services.ProjrctServiceFolder
+namespace App.DataAccess.Services.ProjrctServiceFolder
 {
     public interface IProjectService
     {
-        Task<List<skills>> GetAll();
-        Task<skills> GetById(int id);
-        Task Add(skills model);
-        Task Update(int id, skills model);
+        Task<List<Project>> GetAll();
+        Task<Project> GetById(int id);
+        Task Add(Project model);
+        Task Update(int id, Project model);
         Task Delete(int id);
     }
 }

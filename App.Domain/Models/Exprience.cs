@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using WebApplication1.Enums;
+﻿using App.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
-namespace WebApplication1.Models
+namespace App.Domain.Models
 {
     public class Exprience : BaseData
     {

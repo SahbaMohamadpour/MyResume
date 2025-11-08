@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebApplication1.Models;
-using static WebApplication1.Models.Skills;
+﻿using App.Domain.Models;
+using App.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Services.SkillServiceFolder
+
+namespace App.DataAccess.Services.SkillServiceFolder
 {
     public class SkillService : ISkillService
     {
@@ -12,31 +13,34 @@ namespace WebApplication1.Services.SkillServiceFolder
             _context = context;
         }
 
-        public async Task Add(skills model)
+        public async Task Add(Skill model)
         {
             await _context.Skills.AddAsync(model);
             await _context.SaveChangesAsync();
+
         }
 
         public async Task Delete(int id)
         {
-            var skill = await _context.Skill.FindAsync(id);
-            if (skill != null)
+            var trick = await _context.Skills.FindAsync(id);
+            if (trick != null)
             {
-                _context.Skills.Remove(skill);
+                _context.Skills.Remove(trick);
 
             }
             await _context.SaveChangesAsync();
+
+
         }
 
-        public async Task<List<Skills>> GetAll()
+        public async Task<List<Skill>> GetAll()
         {
             return await _context.Skills
-                .OrderByDescending(s => s.UpdateAt).ToListAsync();
-
+                 .OrderByDescending(s => s.UpdateAt)
+                 .ToListAsync();
         }
 
-        public async Task<Skills> GetById(int id)
+        public async Task<Skill> GetById(int id)
         {
             var data = await _context.Skills
                 .FirstOrDefaultAsync(s => s.Id == id);
@@ -48,7 +52,7 @@ namespace WebApplication1.Services.SkillServiceFolder
             return data;
         }
 
-        public async Task Update(int id, skills model)
+        public async Task Update(int id, Skill model)
         {
             var data = await _context.Skills
                 .FirstOrDefaultAsync(s => s.Id == id);

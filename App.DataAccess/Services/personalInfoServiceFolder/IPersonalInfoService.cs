@@ -1,6 +1,6 @@
-﻿using WebApplication1.Models;
+﻿using App.Domain.Models;
 
-namespace WebApplication1.Services.personalInfoServiceFolder
+namespace App.DataAccess.Services.personalInfoServiceFolder
 {
     public interface IPersonalInfoService
     {

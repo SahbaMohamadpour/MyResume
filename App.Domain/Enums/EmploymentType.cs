@@ -1,4 +1,4 @@
-﻿namespace WebApplication1.Enums
+﻿namespace App.Domain.Enums
 {
     public enum EmploymentType
     {

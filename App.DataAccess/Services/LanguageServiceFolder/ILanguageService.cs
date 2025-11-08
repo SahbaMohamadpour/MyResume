@@ -1,6 +1,6 @@
-﻿using WebApplication1.Models;
+﻿using App.Domain.Models;
 
-namespace WebApplication1.Services.LanguageServiceFolder
+namespace App.DataAccess.Services.LanguageServiceFolder
 {
     public interface ILanguageService
     {

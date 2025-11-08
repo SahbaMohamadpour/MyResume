@@ -1,10 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using App.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using System.Collections.Generic;
-using WebApplication1.Models;
-using static WebApplication1.Models.Skills;
 
-namespace WebApplication1
+
+namespace App.Infrastructure
 {
     public class DataContext : DbContext
 
@@ -31,10 +30,10 @@ namespace WebApplication1
         public DbSet<Exprience> Expriences { get; set; }
         public DbSet<Hobbies> Hobby { get; set; }
         public DbSet<Language> Languages { get; set; }
-        public DbSet<Personalinfo> Skills { get; set; }
+        public DbSet<Personalinfo> Personalinfos { get; set; }
 
-        public DbSet<skills> Projects { get; set; }
-        public DbSet<Skill> Skill { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Skill> Skills { get; set; }
 
 
 

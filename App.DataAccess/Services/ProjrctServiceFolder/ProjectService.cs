@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebApplication1.Models;
+﻿using App.Domain.Models;
+using App.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Services.ProjrctServiceFolder
+namespace App.DataAccess.Services.ProjrctServiceFolder
 {
     public class ProjectService : IProjectService
     {
@@ -10,7 +11,7 @@ namespace WebApplication1.Services.ProjrctServiceFolder
         {
             _context = context;
         }
-        public async Task Add(skills model)
+        public async Task Add(Project model)
         {
             await _context.Projects.AddAsync(model);
             await _context.SaveChangesAsync();
@@ -28,7 +29,7 @@ namespace WebApplication1.Services.ProjrctServiceFolder
 
         }
 
-        public async Task<List<skills>> GetAll()
+        public async Task<List<Project>> GetAll()
         {
             return await _context.Projects
                  .OrderByDescending(s => s.UpdateAt).ToListAsync();
@@ -36,7 +37,7 @@ namespace WebApplication1.Services.ProjrctServiceFolder
 
         }
 
-        public async Task<skills> GetById(int id)
+        public async Task<Project> GetById(int id)
         {
             var data = await _context.Projects
                 .FirstOrDefaultAsync(s => s.Id == id);
@@ -49,7 +50,7 @@ namespace WebApplication1.Services.ProjrctServiceFolder
 
         }
 
-        public  async Task Update(int id, skills model)
+        public  async Task Update(int id, Project model)
         {
             var data = await _context.Projects
                 .FirstOrDefaultAsync(s => s.Id == id);

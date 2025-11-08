@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebApplication1.Models;
+﻿using App.Domain.Models;
+using App.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Services.LanguageServiceFolder
+namespace App.DataAccess.Services.LanguageServiceFolder
 {
     public class LanguageService : ILanguageService
     {

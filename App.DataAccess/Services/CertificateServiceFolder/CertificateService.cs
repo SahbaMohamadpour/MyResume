@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebApplication1.Models;
+﻿using App.Domain.Models;
+using App.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Services.CertificateServiceFolder
+namespace App.DataAccess.Services.CertificateServiceFolder
 {
     public class CertificateService : ICertificateService
     {
