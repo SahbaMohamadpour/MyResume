@@ -7,27 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using App.Domain.Models;
 using App.Infrastructure;
-using App.DataAccess.Services.SkillServiceFolder;
+using App.DataAccess.Services.ProjrctServiceFolder;
 
 namespace WebApplication1.Controllers
 {
-    public class SkillsController : Controller
+    public class ProjectsController : Controller
     {
-        ISkillService _skillService;
+        IProjectService _projectService;
 
-        public SkillsController(ISkillService skillService)
+        public ProjectsController(IProjectService projectService)
         {
-            _skillService = skillService;
+            _projectService = projectService;
         }
 
-        // GET: Skills
+      
         public async Task<IActionResult> Index()
         {
-            var data = await _skillService.GetAll();
+            var data = await _projectService.GetAll();
             return View(data);
         }
 
-        // GET: Skills/Details/5
+       
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,51 +35,61 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var skill = await _skillService.GetById(id.Value);
-            if (skill == null)
+            var projectService = await _projectService.GetById(id.Value);
+            if (projectService == null)
             {
                 return NotFound();
             }
 
-            return View(skill);
+            return View(projectService);
         }
 
-        // GET: Skills/Create
+        
         public IActionResult Create()
         {
             return View();
         }
 
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Skill skill)
+        public async Task<IActionResult> Create( Project project)
         {
-            await _skillService.Add(SkillService);
+            await _projectService.Add(project);
             return RedirectToAction(nameof(Index));
-
         }
 
-        // GET: Skills/Edit/5
+        
         public async Task<IActionResult> Edit(int? id)
         {
-            return View();
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Skill skill)
-        {
-            if (id != skillService.Id)
+            if (id == null)
             {
                 return NotFound();
             }
-            await _skillService.Update(id,skillService);
+
+            var projectService = await _projectService.GetById(id.Value);
+            if (projectService == null)
+            {
+                return NotFound();
+            }
+            return View(projectService);
+        }
+
+       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Project project)
+        {
+            if (id != project.Id)
+            {
+                return NotFound();
+            }
+            await _projectService.Update(project);
 
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Skills/Delete/5
+      
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -87,28 +97,24 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var SkillService = await _skillService.GetById(id.Value);
-            if (SkillService == null)
+            var Project = await _projectService.GetById(id.Value);
+            if (Project == null)
             {
                 return NotFound();
             }
 
-            return View(SkillService);
+            return View(Project);
         }
 
-        // POST: Skills/Delete/5
+       
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var gameDisk = _skillService.GetById(id);
+            var Project = _projectService.GetById(id);
 
-            await _skillService.Delete(SkillService.Id);
+            await _projectService.Remove(Project.Id);
 
             return RedirectToAction(nameof(Index));
         }
-
-
-
-    }
 }
