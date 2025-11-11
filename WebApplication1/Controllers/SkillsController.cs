@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using App.Domain.Models;
 using App.Infrastructure;
 using App.DataAccess.Services.SkillServiceFolder;
+using App.DataAccess.Services.ProjrctServiceFolder;
 
 namespace WebApplication1.Controllers
 {
@@ -20,14 +21,13 @@ namespace WebApplication1.Controllers
             _skillService = skillService;
         }
 
-        // GET: Skills
         public async Task<IActionResult> Index()
         {
             var data = await _skillService.GetAll();
             return View(data);
         }
 
-        // GET: Skills/Details/5
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,43 +44,23 @@ namespace WebApplication1.Controllers
             return View(skill);
         }
 
-        // GET: Skills/Create
+
         public IActionResult Create()
         {
             return View();
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Skill skill)
         {
-            await _skillService.Add(SkillService);
+            await _skillService.Add(skill);
             return RedirectToAction(nameof(Index));
-
         }
 
-        // GET: Skills/Edit/5
+
         public async Task<IActionResult> Edit(int? id)
-        {
-            return View();
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Skill skill)
-        {
-            if (id != skillService.Id)
-            {
-                return NotFound();
-            }
-            await _skillService.Update(id,skillService);
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        // GET: Skills/Delete/5
-        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -92,21 +72,52 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
-
             return View(SkillService);
         }
 
-        // POST: Skills/Delete/5
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Skill skill)
+        {
+            if (id != skill.Id)
+            {
+                return NotFound();
+            }
+            await _skillService.Update(skill);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var skill = await _skillService.GetById(id.Value);
+            if (skill == null)
+            {
+                return NotFound();
+            }
+
+            return View(skill);
+        }
+
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var gameDisk = _skillService.GetById(id);
+            var skill = _skillService.GetById(id);
 
-            await _skillService.Delete(SkillService.Id);
+            await _skillService.Remove(skill.Id);
 
             return RedirectToAction(nameof(Index));
         }
+
 
 
 

@@ -20,14 +20,14 @@ namespace WebApplication1.Controllers
             _projectService = projectService;
         }
 
-      
+
         public async Task<IActionResult> Index()
         {
             var data = await _projectService.GetAll();
             return View(data);
         }
 
-       
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,22 +44,22 @@ namespace WebApplication1.Controllers
             return View(projectService);
         }
 
-        
+
         public IActionResult Create()
         {
             return View();
         }
 
-      
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( Project project)
+        public async Task<IActionResult> Create(Project project)
         {
             await _projectService.Add(project);
             return RedirectToAction(nameof(Index));
         }
 
-        
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,7 +75,7 @@ namespace WebApplication1.Controllers
             return View(projectService);
         }
 
-       
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Project project)
@@ -89,7 +89,7 @@ namespace WebApplication1.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-      
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -106,7 +106,7 @@ namespace WebApplication1.Controllers
             return View(Project);
         }
 
-       
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -117,4 +117,5 @@ namespace WebApplication1.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+    }
 }

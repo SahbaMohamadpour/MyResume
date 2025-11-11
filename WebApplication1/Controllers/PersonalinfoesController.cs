@@ -20,13 +20,13 @@ namespace WebApplication1.Controllers
             _personalInfoService = personalInfoService;
         }
 
-        // GET: Personalinfoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Personalinfos.ToListAsync());
+            var data = await _personalInfoService.GetAll();
+            return View(data);
         }
 
-        // GET: Personalinfoes/Details/5
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,39 +34,31 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var personalinfo = await _context.Personalinfos
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (personalinfo == null)
+            var data = await _personalInfoService.GetById(id.Value);
+            if (data == null)
             {
                 return NotFound();
             }
 
-            return View(personalinfo);
+            return View(data);
         }
 
-        // GET: Personalinfoes/Create
+
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Personalinfoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Image,Position,About,Email,Manifesto,Country,Website,LinkedIn,GitHub,Id,CreateAt,UpdateAt")] Personalinfo personalinfo)
+        public async Task<IActionResult> Create(Personalinfo personalinfo)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(personalinfo);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(personalinfo);
+            await _personalInfoService.Add(personalinfo);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Personalinfoes/Edit/5
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,7 +66,7 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var personalinfo = await _context.Personalinfos.FindAsync(id);
+            var personalinfo = await _personalInfoService.GetById(id.Value);
             if (personalinfo == null)
             {
                 return NotFound();
@@ -82,42 +74,21 @@ namespace WebApplication1.Controllers
             return View(personalinfo);
         }
 
-        // POST: Personalinfoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,Image,Position,About,Email,Manifesto,Country,Website,LinkedIn,GitHub,Id,CreateAt,UpdateAt")] Personalinfo personalinfo)
+        public async Task<IActionResult> Edit(int id, Personalinfo personalinfo)
         {
             if (id != personalinfo.Id)
             {
                 return NotFound();
             }
+            await _personalInfoService.Update(personalinfo);
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(personalinfo);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PersonalinfoExists(personalinfo.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(personalinfo);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Personalinfoes/Delete/5
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,34 +96,25 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var personalinfo = await _context.Personalinfos
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (personalinfo == null)
+            var data = await _personalInfoService.GetById(id.Value);
+            if (data == null)
             {
                 return NotFound();
             }
 
-            return View(personalinfo);
+            return View(data);
         }
 
-        // POST: Personalinfoes/Delete/5
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var personalinfo = await _context.Personalinfos.FindAsync(id);
-            if (personalinfo != null)
-            {
-                _context.Personalinfos.Remove(personalinfo);
-            }
+            var Project = _personalInfoService.GetById(id);
 
-            await _context.SaveChangesAsync();
+            await _personalInfoService.Remove(Project.Id);
+
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool PersonalinfoExists(int id)
-        {
-            return _context.Personalinfos.Any(e => e.Id == id);
         }
     }
 }
