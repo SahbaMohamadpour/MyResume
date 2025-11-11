@@ -78,13 +78,13 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Skill skill)
+        public async Task<IActionResult> Edit(int id, Skill skills)
         {
-            if (id != skill.Id)
+            if (id != skills.Id)
             {
                 return NotFound();
             }
-            await _skillService.Update(skill);
+            await _skillService.Update(skills);
 
             return RedirectToAction(nameof(Index));
         }
@@ -109,7 +109,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var skill = _skillService.GetById(id);
 

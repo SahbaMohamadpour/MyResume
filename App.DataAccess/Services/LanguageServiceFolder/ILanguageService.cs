@@ -9,5 +9,6 @@ namespace App.DataAccess.Services.LanguageServiceFolder
         Task Add(Language model);
         Task Update(int id, Language model);
         Task Delete(int id);
+       
     }
 }

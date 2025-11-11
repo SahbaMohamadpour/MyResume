@@ -109,7 +109,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var Project = _projectService.GetById(id);
 

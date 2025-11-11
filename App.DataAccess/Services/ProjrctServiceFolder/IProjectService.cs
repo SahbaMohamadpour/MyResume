@@ -9,7 +9,6 @@ namespace App.DataAccess.Services.ProjrctServiceFolder
         Task Add(Project model);
         Task Update(int id, Project model);
         Task Delete(int id);
-        Task Remove(int id);
-        Task Update(Project project);
+        
     }
 }

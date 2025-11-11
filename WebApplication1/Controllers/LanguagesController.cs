@@ -53,9 +53,9 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(LanguageService languageService)
+        public async Task<IActionResult> Create(Language language)
         {
-            await _LanguageService.Add(languageService);
+            await _LanguageService.Add(language);
             return RedirectToAction(nameof(Index));
         }
 
@@ -78,13 +78,13 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, LanguageService languageService)
+        public async Task<IActionResult> Edit(int id, Language language)
         {
-            if (id != LanguageService.Id)
+            if (id != language.Id)
             {
                 return NotFound();
             }
-            await _LanguageService.Update(languageService);
+            await _LanguageService.Update(language);
 
             return RedirectToAction(nameof(Index));
         }
@@ -109,7 +109,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var data = _LanguageService.GetById(id);
 
