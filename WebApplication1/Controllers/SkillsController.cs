@@ -84,7 +84,7 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
-            await _skillService.Update(skills);
+            await _skillService.Update(id, skills);
 
             return RedirectToAction(nameof(Index));
         }
@@ -113,7 +113,7 @@ namespace WebApplication1.Controllers
         {
             var skill = _skillService.GetById(id);
 
-            await _skillService.Remove(skill.Id);
+            await _skillService.Delete(skill.Id);
 
             return RedirectToAction(nameof(Index));
         }

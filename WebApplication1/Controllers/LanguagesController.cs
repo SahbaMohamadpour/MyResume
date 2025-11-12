@@ -84,7 +84,7 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
-            await _LanguageService.Update(language);
+            await _LanguageService.Update(id, language);
 
             return RedirectToAction(nameof(Index));
         }
@@ -113,7 +113,7 @@ namespace WebApplication1.Controllers
         {
             var data = _LanguageService.GetById(id);
 
-            await _LanguageService.Remove(data.Id);
+            await _LanguageService.Delete(data.Id);
 
             return RedirectToAction(nameof(Index));
         }

@@ -7,25 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using App.Domain.Models;
 using App.Infrastructure;
+using App.DataAccess.Services.ExprienceServiceFolder;
 
 namespace WebApplication1.Controllers
 {
     public class ExpriencesController : Controller
     {
-        private readonly DataContext _context;
+        IExprienceService _exprienceService;
 
-        public ExpriencesController(DataContext context)
+        public ExpriencesController(IExprienceService Exprience)
         {
-            _context = context;
+            _exprienceService = Exprience;
         }
 
-        // GET: Expriences
+
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Expriences.ToListAsync());
+            var data = await _exprienceService.GetAll();
+            return View(data);
         }
 
-        // GET: Expriences/Details/5
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +35,30 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var exprience = await _context.Expriences
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (exprience == null)
+            var data = await _exprienceService.GetById(id.Value);
+            if (data == null)
             {
                 return NotFound();
             }
 
-            return View(exprience);
+            return View(data);
         }
 
-        // GET: Expriences/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Expriences/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("JobTitle,CompanyName,IsRemote,EmploymentType,Id,CreateAt,UpdateAt")] Exprience exprience)
+        public async Task<IActionResult> Create(Exprience exprience)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(exprience);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(exprience);
+            await _exprienceService.Add(exprience);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Expriences/Edit/5
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,50 +66,27 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var exprience = await _context.Expriences.FindAsync(id);
-            if (exprience == null)
+            var data = await _exprienceService.GetById(id.Value);
+            if (data == null)
             {
                 return NotFound();
             }
-            return View(exprience);
+            return View(data);
         }
-
-        // POST: Expriences/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("JobTitle,CompanyName,IsRemote,EmploymentType,Id,CreateAt,UpdateAt")] Exprience exprience)
+        public async Task<IActionResult> Edit(int id, Exprience exprience)
         {
             if (id != exprience.Id)
             {
                 return NotFound();
             }
+            await _exprienceService.Update(id, exprience);
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(exprience);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ExprienceExists(exprience.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(exprience);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Expriences/Delete/5
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +94,23 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var exprience = await _context.Expriences
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (exprience == null)
+            var data = await _exprienceService.GetById(id.Value);
+            if (data == null)
             {
                 return NotFound();
             }
 
-            return View(exprience);
+            return View(data);
         }
-
-        // POST: Expriences/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var exprience = await _context.Expriences.FindAsync(id);
-            if (exprience != null)
-            {
-                _context.Expriences.Remove(exprience);
-            }
+            var data = _exprienceService.GetById(id);
 
-            await _context.SaveChangesAsync();
+            await _exprienceService.Delete(data.Id);
+
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ExprienceExists(int id)
-        {
-            return _context.Expriences.Any(e => e.Id == id);
         }
     }
 }

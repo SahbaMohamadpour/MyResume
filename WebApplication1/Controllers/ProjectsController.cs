@@ -84,7 +84,7 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
-            await _projectService.Update(project);
+            await _projectService.Update(id,project);
 
             return RedirectToAction(nameof(Index));
         }
@@ -113,7 +113,7 @@ namespace WebApplication1.Controllers
         {
             var Project = _projectService.GetById(id);
 
-            await _projectService.Remove(Project.Id);
+            await _projectService.Delete(Project.Id);
 
             return RedirectToAction(nameof(Index));
         }
