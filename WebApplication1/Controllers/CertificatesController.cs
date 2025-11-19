@@ -42,6 +42,11 @@ namespace WebApplication1.Controllers
 
             return View(data);
         }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Certificate certificate)

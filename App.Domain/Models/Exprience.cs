@@ -18,7 +18,7 @@ namespace App.Domain.Models
         [Display(Name = "Remote Position")]
         public bool IsRemote { get; set; }
 
-        [Required(ErrorMessage = "Employment Type is required")]
+      
         [Display(Name = "Employment Type")]
         public EmploymentType EmploymentType { get; set; }
     }
