@@ -1,71 +1,56 @@
 ﻿@model IEnumerable<App.Domain.Models.Certificate>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Certificates";
 }
 
-<h1>Index</h1>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h4 text-primary">🏆 Certificates</h1>
+        <a asp-action="Create" asp-controller="Certificates" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-plus-circle"></i> Add Certificate
+        </a>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Organization)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CertificateUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreateAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdateAt)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Organization)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CertificateUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreateAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdateAt)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h6 class="card-title text-primary">@item.Name</h6>
+                        <p class="card-text text-muted small mb-1">
+                            <i class="bi bi-building"></i> @item.Organization
+                        </p>
+                        <p class="card-text text-muted small mb-1">
+                            <i class="bi bi-calendar"></i> @item.Date.ToString("MMM yyyy")
+                        </p>
+                        <div class="mb-2">
+                            @for (int i = 0; i < 5; i++)
+                            {
+                                <i class="bi @(i < item.Rate ? "bi-star-fill text-warning" : "bi-star text-muted")"></i>
+                            }
+                        </div>
+                        @if (!string.IsNullOrEmpty(item.CertificateUrl))
+                        {
+                            <a href="@item.CertificateUrl" target="_blank" class="btn btn-sm btn-outline-info w-100 mb-2">
+                                <i class="bi bi-link"></i> View Certificate
+                            </a>
+                        }
+                        <div class="btn-group w-100">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
