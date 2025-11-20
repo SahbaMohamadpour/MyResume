@@ -6,60 +6,89 @@
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h4 text-primary">📁 Experiences</h1>
-        <a asp-action="Create" class="btn btn-sm btn-outline-primary">
-            <i class="bi bi-plus-circle"></i> New
+        <h1 class="h3 text-primary">💼 Work Experiences</h1>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Add Experience
         </a>
     </div>
 
-    <div class="card shadow-sm">
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Role</th>
-                            <th>Company</th>
-                            <th class="text-center">🌍</th>
-                            <th>Type</th>
-                            <th class="text-end">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td class="fw-semibold">@item.JobTitle</td>
-                                <td>@item.CompanyName</td>
-                                <td class="text-center">
-                                    @if (item.IsRemote)
-                                    {
-                                        <span class="badge bg-success">Yes</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge bg-secondary">No</span>
-                                    }
-                                </td>
-                                
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary" title="Edit">
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5">
+            <i class="bi bi-briefcase display-1 text-muted"></i>
+            <h3 class="h5 text-muted mt-3">No experiences yet</h3>
+            <p class="text-muted">Add your first work experience to get started.</p>
+            <a asp-action="Create" class="btn btn-primary mt-2">
+                <i class="bi bi-plus-circle me-1"></i> Create First Experience
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h5 class="card-title text-primary mb-1">@item.JobTitle</h5>
+                                    <p class="card-text text-muted mb-2">
+                                        <i class="bi bi-building me-1"></i>@item.CompanyName
+                                    </p>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        @if (item.IsRemote)
+                                        {
+                                            <span class="badge bg-success">
+                                                <i class="bi bi-globe me-1"></i>Remote
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">
+                                                <i class="bi bi-geo-alt me-1"></i>On-site
+                                            </span>
+                                        }
+                                        @* @if (!string.IsNullOrEmpty(item.EmploymentType))
+                                        {
+                                            <span class="badge bg-info text-dark">@item.EmploymentType</span>
+                                        } *@
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                                    <div class="btn-group">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm" title="Edit">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info" title="Details">
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm" title="Details">
                                             <i class="bi bi-eye"></i>
                                         </a>
-                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger" title="Delete">
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm" title="Delete">
                                             <i class="bi bi-trash"></i>
                                         </a>
                                     </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
-    </div>
+    }
 </div>
+
+<style>
+    .card {
+        transition: transform 0.2s ease-in-out;
+    }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+    .badge {
+        font-size: 0.75rem;
+        padding: 0.35em 0.65em;
+    }
+</style>

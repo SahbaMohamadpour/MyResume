@@ -43,7 +43,7 @@ namespace WebApplication1.Controllers
 
             return View(data);
         }
-
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -86,7 +86,7 @@ namespace WebApplication1.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

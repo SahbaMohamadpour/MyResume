@@ -1,47 +1,296 @@
 ﻿@model IEnumerable<App.Domain.Models.Hobbies>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "My Hobbies";
 }
 
-<h1>Index</h1>
+<div class="container-fluid px-4 py-5">
+    <!-- Header -->
+    <div class="row align-items-center mb-5">
+        <div class="col">
+            <h1 class="display-6 fw-bold text-gradient mb-2">🎨 My Hobbies & Interests</h1>
+            <p class="text-muted">Discover the things that spark my creativity and joy</p>
+        </div>
+        <div class="col-auto">
+            <a asp-action="Create" class="btn btn-primary btn-lg px-4 py-2 glow-effect">
+                <i class="bi bi-plus-circle-fill me-2"></i>Add New Hobby
+            </a>
+        </div>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreateAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdateAt)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreateAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdateAt)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+    @if (!Model.Any())
+    {
+        <!-- Empty State -->
+        <div class="text-center py-9">
+            <div class="empty-state-icon mb-4">
+                <i class="bi bi-stars display-1"></i>
+            </div>
+            <h3 class="h4 text-muted mb-3">No hobbies yet</h3>
+            <p class="text-muted mb-4">Share your passions and interests to build your personality profile</p>
+            <a asp-action="Create" class="btn btn-primary btn-lg px-5">
+                <i class="bi bi-plus-circle me-2"></i>Add First Hobby
+            </a>
+        </div>
+    }
+    else
+    {
+        <!-- Hobbies Grid -->
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="hobby-card">
+                        <div class="hobby-icon">
+                            @GetHobbyIcon(item.Name)
+                        </div>
+                        <div class="hobby-content">
+                            <h5 class="hobby-title">@item.Name</h5>
+                            <div class="hobby-meta">
+                                <div class="meta-item">
+                                    <i class="bi bi-calendar-plus"></i>
+                                    <span>Added @item.CreateAt.ToString("MMM dd, yyyy")</span>
+                                </div>
+                               @*  @if (item.UpdateAt.HasValue)
+                                {
+                                    <div class="meta-item">
+                                        <i class="bi bi-arrow-clockwise"></i>
+                                        <span>Updated @item.UpdateAt.Value.ToString("MMM dd, yyyy")</span>
+                                    </div>
+                                } *@
+                            </div>
+                        </div>
+                        <div class="hobby-actions">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action" title="Edit">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn-action" title="Details">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn-action btn-action-danger" title="Delete">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@functions {
+    private string GetHobbyIcon(string hobbyName)
+    {
+        var hobby = hobbyName.ToLower();
+        return hobby switch
+        {
+            var h when h.Contains("read") || h.Contains("book") => "📚",
+            var h when h.Contains("music") || h.Contains("guitar") || h.Contains("piano") => "🎵",
+            var h when h.Contains("game") || h.Contains("gaming") => "🎮",
+            var h when h.Contains("sport") || h.Contains("football") || h.Contains("basketball") => "⚽",
+            var h when h.Contains("photo") || h.Contains("camera") => "📷",
+            var h when h.Contains("travel") || h.Contains("adventure") => "✈️",
+            var h when h.Contains("cook") || h.Contains("food") => "🍳",
+            var h when h.Contains("art") || h.Contains("paint") || h.Contains("draw") => "🎨",
+            var h when h.Contains("code") || h.Contains("program") => "💻",
+            var h when h.Contains("movie") || h.Contains("film") => "🎬",
+            var h when h.Contains("dance") => "💃",
+            var h when h.Contains("swim") => "🏊",
+            var h when h.Contains("yoga") || h.Contains("meditat") => "🧘",
+            var h when h.Contains("garden") || h.Contains("plant") => "🌱",
+            var h when h.Contains("write") || h.Contains("blog") => "✏️",
+            var h when h.Contains("chess") => "♟️",
+            var h when h.Contains("car") || h.Contains("auto") => "🚗",
+            var h when h.Contains("bike") || h.Contains("cycle") => "🚴",
+            var h when h.Contains("run") || h.Contains("jog") => "🏃",
+            var h when h.Contains("fish") => "🎣",
+            _ => "🌟"
+        };
+    }
 }
-    </tbody>
-</table>
+
+<style>
+    /* Custom Styles */
+    .text-gradient {
+        background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .glow-effect:hover {
+        box-shadow: 0 0 25px rgba(255, 107, 107, 0.4);
+        transition: all 0.3s ease;
+    }
+
+    .hobby-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+        border: none;
+        transition: all 0.4s ease;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .hobby-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .hobby-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+            .hobby-card:hover::before {
+                transform: scaleX(1);
+            }
+
+    .hobby-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        display: block;
+        transition: transform 0.3s ease;
+    }
+
+    .hobby-card:hover .hobby-icon {
+        transform: scale(1.2) rotate(5deg);
+    }
+
+    .hobby-content {
+        margin-bottom: 1.5rem;
+    }
+
+    .hobby-title {
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+    }
+
+    .hobby-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        color: #718096;
+        font-size: 0.85rem;
+    }
+
+        .meta-item i {
+            color: #4ECDC4;
+        }
+
+    .hobby-actions {
+        display: flex;
+        justify-content: center;
+        gap: 0.75rem;
+        padding-top: 1rem;
+        border-top: 1px solid #f1f3f4;
+    }
+
+    .btn-action {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8fafc;
+        border: 2px solid #e2e8f0;
+        color: #718096;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+            .btn-action:hover:nth-child(1) {
+                background: #667eea;
+                border-color: #667eea;
+                color: white;
+            }
+
+            .btn-action:hover:nth-child(2) {
+                background: #4ECDC4;
+                border-color: #4ECDC4;
+                color: white;
+            }
+
+    .btn-action-danger:hover {
+        background: #FF6B6B;
+        border-color: #FF6B6B;
+        color: white;
+    }
+
+    .empty-state-icon {
+        color: #cbd5e0;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    .py-9 {
+        padding-top: 6rem !important;
+        padding-bottom: 6rem !important;
+    }
+
+    /* Floating animation */
+    @@keyframes float {
+        0%, 100% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .hobby-card {
+            padding: 1.5rem 1rem;
+        }
+
+        .hobby-icon {
+            font-size: 2.5rem;
+        }
+
+        .hobby-title {
+            font-size: 1.1rem;
+        }
+    }
+
+    /* Grid animation */
+    .hobby-card {
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

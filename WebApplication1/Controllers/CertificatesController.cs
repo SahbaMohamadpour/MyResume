@@ -55,7 +55,7 @@ namespace WebApplication1.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,7 +83,7 @@ namespace WebApplication1.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
